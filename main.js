@@ -1,4 +1,5 @@
 let map, marker, heatmap, geocoder, serachMarket;
+let user_points = [];
 function initMap() {
   const coord = { lat: -0.1929404, lng: -78.5015253 };
   const points = [
@@ -26,7 +27,7 @@ function initMap() {
     map: map,
   }); */
   heatmap = new google.maps.visualization.HeatmapLayer({
-    data: points,
+    data: user_points,
     map: map,
   });
 }
@@ -43,15 +44,17 @@ document
 document
   .getElementById("change-radius")
   .addEventListener("click", changeRadius);
-document.getElementById("search").addEventListener("click", codeAddress);
+
+//document.getElementById("search").addEventListener("click", codeAddress);
+document.getElementById("search").addEventListener("click", searhAddress);
 
 function codeAddress() {
-  var address = document.getElementById("address").value;
+  let address = document.getElementById("address").value;
   console.log(address);
   geocoder = new google.maps.Geocoder();
   geocoder.geocode({ address: address }, function (results, status) {
     if (status == "OK") {
-      console.log(JSON.stringify(results[0].geometry.location))
+      console.log(JSON.stringify(results[0].geometry.location));
       //centra el mapa segun el resultado
       map.setCenter(results[0].geometry.location);
       //crea un marcado en el mapa
@@ -59,6 +62,28 @@ function codeAddress() {
         map: map,
         position: results[0].geometry.location,
       });
+    } else {
+      alert("Geocode was not successful for the following reason: " + status);
+    }
+  });
+}
+function searhAddress() {
+  let address = document.getElementById("address").value;
+  console.log(address);
+  geocoder = new google.maps.Geocoder();
+  geocoder.geocode({ address: address }, function (results, status) {
+    if (status == "OK") {
+      console.log(JSON.stringify(results[0].geometry.location));
+      //centra el mapa segun el resultado
+      map.setCenter(results[0].geometry.location);
+      //añade el punto al arreglo de puntos para heatmap
+      user_points.push(results[0].geometry.location);
+      console.log(user_points)
+      heatmap = new google.maps.visualization.HeatmapLayer({
+        map: map,
+        data:[results[0].geometry.location],
+      });
+      console.log(JSON.stringify(user_points));
     } else {
       alert("Geocode was not successful for the following reason: " + status);
     }
