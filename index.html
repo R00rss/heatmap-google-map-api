@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <title>Simple Map</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script type="module" src="./main.js"></script>
+  </head>
+  <body class="bg-slate-300">
+    <div class="w-full flex flex-col items-center justify-center">
+      <div class="flex flex-row gap-1 items-center justify-center my-2">
+        <button
+          class="text-slate-700 bg-black rounded-[5px] px-3 text-center"
+          id="toggle-heatmap"
+        >
+          Mapa de Calor
+        </button>
+        <button
+          class="text-slate-700 bg-black rounded-[5px] px-3 text-center"
+          id="change-gradient"
+        >
+          Cambiar Color
+        </button>
+        <button
+          class="text-slate-700 bg-black rounded-[5px] px-3 text-center"
+          id="change-radius"
+        >
+          Cambiar Radio
+        </button>
+        <button
+          class="text-slate-700 bg-black rounded-[5px] px-3 text-center"
+          id="change-opacity"
+        >
+          Cambiar Opacidad
+        </button>
+        <div class="">
+          <input class="border-none bg-slate-500 rounded-[5px] px-2 text-black focus:border-none active:border-none" id="address" type="textbox" value="Quito,Lorenzo Aldana" />
+          <input
+            class="text-slate-700 bg-black rounded-[5px] px-3 text-center cursor-pointer"
+            id="search"
+            type="button"
+            value="Encode"
+          />
+        </div>
+      </div>
+      <div class="h-[500px] w-4/5 rounded-md" id="map"></div>
+    </div>
+    <!-- 
+     The `defer` attribute causes the callback to execute after the full HTML
+     document has been parsed. For non-blocking uses, avoiding race conditions,
+     and consistent behavior across browsers, consider loading using Promises
+     with https://www.npmjs.com/package/@googlemaps/js-api-loader.
+    -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&libraries=visualization&v=weekly"
+      defer
+    ></script>
+  </body>
+</html>
